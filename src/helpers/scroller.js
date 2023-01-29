@@ -16,7 +16,7 @@ export function makeScroller() {
         }
     }
     function calcScrollStepPx(distancePx) {
-        return SCROLL_ZONE_PX - distancePx;
+        return SCROLL_ZONE_PX - Math.max(distancePx, 0);
     }
 
     /**

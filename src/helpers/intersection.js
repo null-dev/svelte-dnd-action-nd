@@ -165,9 +165,9 @@ export function isElementOffDocument(el) {
  */
 export function calcInnerDistancesBetweenPointAndSidesOfElement(point, el) {
     const rect = getAbsoluteRect(el);
-    if (!isPointInsideRect(point, rect)) {
-        return null;
-    }
+    // if (!isPointInsideRect(point, rect)) {
+    //     return null;
+    // }
     return {
         top: point.y - rect.top,
         bottom: rect.bottom - point.y,
