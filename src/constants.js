@@ -74,3 +74,20 @@ export function setDebugMode(isDebug) {
         printDebug = () => {};
     }
 }
+
+/**
+ * Whether dragging an object to the window edge will scroll the window.
+ * Do not write to this variable directly, instead use `setScrollWindow`.
+ * @type {boolean}
+ */
+export let scrollWindow = false;
+
+/**
+ * Set whether dragging an object to the window edge will scroll the window
+ * Applies to all dropzones.
+ * All calls to this method must be done before the user drags any elements.
+ * @param {Boolean} shouldScrollWindow
+ */
+export function setScrollWindow(shouldScrollWindow) {
+    scrollWindow = shouldScrollWindow;
+}

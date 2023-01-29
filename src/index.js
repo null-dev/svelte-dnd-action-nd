@@ -7,5 +7,6 @@ export {
     SHADOW_PLACEHOLDER_ITEM_ID,
     DRAGGED_ELEMENT_ID,
     overrideItemIdKeyNameBeforeInitialisingDndZones,
-    setDebugMode
+    setDebugMode,
+    setScrollWindow
 } from "./constants";

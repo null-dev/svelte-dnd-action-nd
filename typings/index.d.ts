@@ -83,3 +83,10 @@ export declare const DRAGGED_ELEMENT_ID: "dnd-action-dragged-el";
  * Allows the user to show/hide console debug output
  */
 export declare function setDebugMode(isDebug: boolean): void;
+
+/**
+ * Set whether dragging an object to the window edge will scroll the window
+ * Applies to all dropzones.
+ * All calls to this method must be done before the user drags any elements.
+ */
+export declare function setScrollWindow(shouldScrollWindow: boolean): void;
