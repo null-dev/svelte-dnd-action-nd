@@ -9,7 +9,7 @@
         "lint": "eslint .",
         "format": "prettier --write .",
         "build": "yarn lint && rollup -c",
-        "prepublishOnly": "yarn build"
+        "prepare": "yarn build"
     },
     "dependencies": {},
     "devDependencies": {
