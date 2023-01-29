@@ -26,7 +26,7 @@ import {
     dispatchConsiderEvent,
     dispatchFinalizeEvent,
     DRAGGED_ENTERED_EVENT_NAME,
-    DRAGGED_LEFT_DOCUMENT_EVENT_NAME,
+    // DRAGGED_LEFT_DOCUMENT_EVENT_NAME,
     DRAGGED_LEFT_EVENT_NAME,
     DRAGGED_LEFT_TYPES,
     DRAGGED_OVER_INDEX_EVENT_NAME
@@ -93,7 +93,7 @@ function watchDraggedElement() {
         dz.addEventListener(DRAGGED_LEFT_EVENT_NAME, handleDraggedLeft);
         dz.addEventListener(DRAGGED_OVER_INDEX_EVENT_NAME, handleDraggedIsOverIndex);
     }
-    window.addEventListener(DRAGGED_LEFT_DOCUMENT_EVENT_NAME, handleDrop);
+    // window.addEventListener(DRAGGED_LEFT_DOCUMENT_EVENT_NAME, handleDrop);
     // it is important that we don't have an interval that is faster than the flip duration because it can cause elements to jump bach and forth
     const observationIntervalMs = Math.max(
         MIN_OBSERVATION_INTERVAL_MS,
@@ -110,7 +110,7 @@ function unWatchDraggedElement() {
         dz.removeEventListener(DRAGGED_LEFT_EVENT_NAME, handleDraggedLeft);
         dz.removeEventListener(DRAGGED_OVER_INDEX_EVENT_NAME, handleDraggedIsOverIndex);
     }
-    window.removeEventListener(DRAGGED_LEFT_DOCUMENT_EVENT_NAME, handleDrop);
+    // window.removeEventListener(DRAGGED_LEFT_DOCUMENT_EVENT_NAME, handleDrop);
     unobserve();
 }
 

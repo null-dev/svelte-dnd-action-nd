@@ -57,7 +57,7 @@ export function observe(draggedEl, dropZones, dzToConfig, intervalMs = INTERVAL_
         if (isElementOffDocument(draggedEl)) {
             printDebug(() => "off document");
             dispatchDraggedLeftDocument(draggedEl);
-            return;
+            // return;
         }
 
         lastCentrePositionOfDragged = currentCenterOfDragged;
