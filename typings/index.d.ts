@@ -33,6 +33,7 @@ export interface Options {
     autoAriaDisabled?: boolean;
     centreDraggedOnCursor?: boolean;
     scrollElement?: HTMLElement; // Element to scroll when pointer is near edge of screen. Defaults to the dropzone itself.
+    keyboardDisabled?: boolean; // Disable keyboard drag/drop
 }
 
 /**

@@ -21,6 +21,7 @@ import {toString} from "./helpers/util";
  * @property {string[]} [dropTargetClasses]
  * @property {function} [transformDraggedElement]
  * @property {HTMLElement} [scrollElement] - element to scroll when pointer is near edge of screen. Defaults to the dropzone itself.
+ * @property {boolean} [keyboardDisabled] - whether keyboard controls should be enabled
  * @param {HTMLElement} node - the element to enhance
  * @param {Options} options
  * @return {{update: function, destroy: function}}
@@ -28,16 +29,16 @@ import {toString} from "./helpers/util";
 export function dndzone(node, options) {
     validateOptions(options);
     const pointerZone = pointerDndZone(node, options);
-    const keyboardZone = keyboardDndZone(node, options);
+    const keyboardZone = options.keyboardDisabled !== true ? keyboardDndZone(node, options) : null;
     return {
         update: newOptions => {
             validateOptions(newOptions);
             pointerZone.update(newOptions);
-            keyboardZone.update(newOptions);
+            if (keyboardZone != null) keyboardZone.update(newOptions);
         },
         destroy: () => {
             pointerZone.destroy();
-            keyboardZone.destroy();
+            if (keyboardZone != null) keyboardZone.destroy();
         }
     };
 }
@@ -58,6 +59,7 @@ function validateOptions(options) {
         autoAriaDisabled,
         centreDraggedOnCursor,
         scrollElement,
+        keyboardDisabled,
         ...rest
     } = options;
     /*eslint-enable*/
