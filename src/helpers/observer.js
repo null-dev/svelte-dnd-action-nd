@@ -20,11 +20,14 @@ let next;
  * Tracks the dragged elements and performs the side effects when it is dragged over a drop zone (basically dispatching custom-events scrolling)
  * @param {Set<HTMLElement>} dropZones
  * @param {HTMLElement} draggedEl
+ * @param {Map} dzToConfig
  * @param {number} [intervalMs = INTERVAL_MS]
  */
-export function observe(draggedEl, dropZones, intervalMs = INTERVAL_MS) {
+export function observe(draggedEl, dropZones, dzToConfig, intervalMs = INTERVAL_MS) {
     // initialization
     let lastDropZoneFound;
+    let savedLastDropZone;
+    let savedLastDropZoneFoundConfig;
     let lastIndexFound;
     let lastIsDraggedInADropZone = false;
     let lastCentrePositionOfDragged;
@@ -36,7 +39,11 @@ export function observe(draggedEl, dropZones, intervalMs = INTERVAL_MS) {
      */
     function andNow() {
         const currentCenterOfDragged = findCenterOfElement(draggedEl);
-        const scrolled = scrollIfNeeded(currentCenterOfDragged, lastDropZoneFound);
+        let scrollElement = savedLastDropZoneFoundConfig != null ? savedLastDropZoneFoundConfig.scrollElement : null;
+        if (scrollElement == null) {
+            scrollElement = savedLastDropZone;
+        }
+        const scrolled = scrollIfNeeded(currentCenterOfDragged, scrollElement);
         // we only want to make a new decision after the element was moved a bit to prevent flickering
         if (
             !scrolled &&
@@ -70,6 +77,8 @@ export function observe(draggedEl, dropZones, intervalMs = INTERVAL_MS) {
                 lastDropZoneFound && dispatchDraggedElementLeftContainerForAnother(lastDropZoneFound, draggedEl, dz);
                 dispatchDraggedElementEnteredContainer(dz, indexObj, draggedEl);
                 lastDropZoneFound = dz;
+                savedLastDropZone = dz;
+                savedLastDropZoneFoundConfig = dzToConfig.get(dz);
             } else if (index !== lastIndexFound) {
                 dispatchDraggedElementIsOverIndex(dz, indexObj, draggedEl);
                 lastIndexFound = index;

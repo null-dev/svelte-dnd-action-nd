@@ -99,7 +99,7 @@ function watchDraggedElement() {
         MIN_OBSERVATION_INTERVAL_MS,
         ...Array.from(dropZones.keys()).map(dz => dzToConfig.get(dz).dropAnimationDurationMs)
     );
-    observe(draggedEl, dropZones, observationIntervalMs * 1.07);
+    observe(draggedEl, dropZones, dzToConfig, observationIntervalMs * 1.07);
 }
 function unWatchDraggedElement() {
     printDebug(() => "unwatching dragged element");
@@ -328,7 +328,8 @@ export function dndzone(node, options) {
         dropTargetStyle: DEFAULT_DROP_TARGET_STYLE,
         dropTargetClasses: [],
         transformDraggedElement: () => {},
-        centreDraggedOnCursor: false
+        centreDraggedOnCursor: false,
+        scrollElement: null
     };
     printDebug(() => [`dndzone good to go options: ${toString(options)}, config: ${toString(config)}`, {node}]);
     let elToIdx = new Map();
@@ -451,7 +452,8 @@ export function dndzone(node, options) {
         dropTargetStyle = DEFAULT_DROP_TARGET_STYLE,
         dropTargetClasses = [],
         transformDraggedElement = () => {},
-        centreDraggedOnCursor = false
+        centreDraggedOnCursor = false,
+        scrollElement = null
     }) {
         config.dropAnimationDurationMs = dropAnimationDurationMs;
         if (config.type && newType !== config.type) {
@@ -464,6 +466,7 @@ export function dndzone(node, options) {
         config.morphDisabled = morphDisabled;
         config.transformDraggedElement = transformDraggedElement;
         config.centreDraggedOnCursor = centreDraggedOnCursor;
+        config.scrollElement = scrollElement;
 
         // realtime update for dropTargetStyle
         if (

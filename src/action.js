@@ -20,6 +20,7 @@ import {toString} from "./helpers/util";
  * @property {object} [dropTargetStyle]
  * @property {string[]} [dropTargetClasses]
  * @property {function} [transformDraggedElement]
+ * @property {HTMLElement} [scrollElement] - element to scroll when pointer is near edge of screen. Defaults to the dropzone itself.
  * @param {HTMLElement} node - the element to enhance
  * @param {Options} options
  * @return {{update: function, destroy: function}}
@@ -56,6 +57,7 @@ function validateOptions(options) {
         transformDraggedElement,
         autoAriaDisabled,
         centreDraggedOnCursor,
+        scrollElement,
         ...rest
     } = options;
     /*eslint-enable*/
@@ -78,5 +80,10 @@ function validateOptions(options) {
 }
 
 function isInt(value) {
-    return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value));
+    return (
+        !isNaN(value) &&
+        (function (x) {
+            return (x | 0) === x;
+        })(parseFloat(value))
+    );
 }
