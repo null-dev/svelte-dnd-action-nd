@@ -236,7 +236,7 @@ function handleDrop() {
         shadowElDropZone = originDropZone;
     }
     printDebug(() => ["dropped in dz", shadowElDropZone]);
-    let {items, type} = dzToConfig.get(shadowElDropZone);
+    let {items, type, onPreDrop} = dzToConfig.get(shadowElDropZone);
     styleInactiveDropZones(
         typeToDropZones.get(type),
         dz => dzToConfig.get(dz).dropTargetStyle,
@@ -245,6 +245,9 @@ function handleDrop() {
     let shadowElIdx = findShadowElementIdx(items);
     // the handler might remove the shadow element, ex: dragula like copy on drag
     if (shadowElIdx === -1) shadowElIdx = originIndex;
+    const dropInfo = {dropIdx: shadowElIdx};
+    onPreDrop(draggedEl, draggedElData, dropInfo);
+    shadowElIdx = dropInfo.dropIdx;
     items = items.map(item => (item[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? draggedElData : item));
     function finalizeWithinZone() {
         unlockOriginDzMinDimensions();
@@ -330,7 +333,8 @@ export function dndzone(node, options) {
         transformDraggedElement: () => {},
         centreDraggedOnCursor: false,
         scrollElement: null,
-        alwaysTransformElement: false
+        alwaysTransformElement: false,
+        onPreDrop: () => {}
     };
     printDebug(() => [`dndzone good to go options: ${toString(options)}, config: ${toString(config)}`, {node}]);
     let elToIdx = new Map();
@@ -455,7 +459,8 @@ export function dndzone(node, options) {
         transformDraggedElement = () => {},
         centreDraggedOnCursor = false,
         scrollElement = null,
-        alwaysTransformElement = false
+        alwaysTransformElement = false,
+        onPreDrop = () => {}
     }) {
         config.dropAnimationDurationMs = dropAnimationDurationMs;
         if (config.type && newType !== config.type) {
@@ -470,6 +475,7 @@ export function dndzone(node, options) {
         config.centreDraggedOnCursor = centreDraggedOnCursor;
         config.scrollElement = scrollElement;
         config.alwaysTransformElement = alwaysTransformElement;
+        config.onPreDrop = onPreDrop;
 
         // realtime update for dropTargetStyle
         if (

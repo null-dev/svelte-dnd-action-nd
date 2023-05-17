@@ -20,6 +20,16 @@ export type TransformDraggedElementFunction = (
     currentMouseY?: number,
 ) => void;
 
+export type OnPreDropFunction = (
+    element?: HTMLElement, // the dragged element.
+    draggedElementData?: Item, // the data of the item from the items array
+    dropInfo?: DropInfo,
+) => void;
+
+export interface DropInfo {
+    dropIdx: number
+}
+
 export declare type Item = Record<string, any>;
 export interface Options {
     items: Item[]; // the list of items that was used to generate the children of the given node
@@ -37,6 +47,7 @@ export interface Options {
     scrollElement?: HTMLElement; // Element to scroll when pointer is near edge of screen. Defaults to the dropzone itself.
     keyboardDisabled?: boolean; // Disable keyboard drag/drop
     alwaysTransformElement?: boolean; // Transform element even if item cannot be dropped in dropzone
+    onPreDrop?: OnPreDropFunction;
 }
 
 /**

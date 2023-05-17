@@ -23,6 +23,7 @@ import {toString} from "./helpers/util";
  * @property {HTMLElement} [scrollElement] - element to scroll when pointer is near edge of screen. Defaults to the dropzone itself.
  * @property {boolean} [keyboardDisabled] - whether keyboard controls should be enabled
  * @property {boolean} [alwaysTransformElement] - whether to always transform the element, even if the item cannot be dropped in the dropzone
+ * @property {function} [onPreDrop]
  * @param {HTMLElement} node - the element to enhance
  * @param {Options} options
  * @return {{update: function, destroy: function}}
@@ -62,6 +63,7 @@ function validateOptions(options) {
         scrollElement,
         keyboardDisabled,
         alwaysTransformElement,
+        onPreDrop,
         ...rest
     } = options;
     /*eslint-enable*/
