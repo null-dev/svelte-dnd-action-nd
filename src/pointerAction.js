@@ -521,7 +521,7 @@ export function dndzone(node, options) {
             const draggableEl = node.children[idx];
             styleDraggable(draggableEl, dragDisabled);
             if (idx === shadowElIdx) {
-                config.transformDraggedElement(draggedEl, draggedElData, idx);
+                config.transformDraggedElement(draggedEl, draggedElData, idx, currentMousePosition.x, currentMousePosition.y);
                 transformed = true;
                 if (!morphDisabled) {
                     morphDraggedElementToBeLike(draggedEl, draggableEl, currentMousePosition.x, currentMousePosition.y);
@@ -544,7 +544,7 @@ export function dndzone(node, options) {
             }
         }
         if (config.alwaysTransformElement && draggedEl != null && !transformed) {
-            config.transformDraggedElement(draggedEl, draggedElData, originIndex);
+            config.transformDraggedElement(draggedEl, draggedElData, originIndex, currentMousePosition.x, currentMousePosition.y);
         }
     }
     configure(options);

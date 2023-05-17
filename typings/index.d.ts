@@ -15,7 +15,9 @@ export declare function dndzone(
 export type TransformDraggedElementFunction = (
     element?: HTMLElement, // the dragged element.
     draggedElementData?: Item, // the data of the item from the items array
-    index?: number // the index the dragged element would get if dropped into the new dnd-zone
+    index?: number, // the index the dragged element would get if dropped into the new dnd-zone
+    currentMouseX?: number,
+    currentMouseY?: number,
 ) => void;
 
 export declare type Item = Record<string, any>;
