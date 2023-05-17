@@ -329,7 +329,8 @@ export function dndzone(node, options) {
         dropTargetClasses: [],
         transformDraggedElement: () => {},
         centreDraggedOnCursor: false,
-        scrollElement: null
+        scrollElement: null,
+        alwaysTransformElement: false
     };
     printDebug(() => [`dndzone good to go options: ${toString(options)}, config: ${toString(config)}`, {node}]);
     let elToIdx = new Map();
@@ -453,7 +454,8 @@ export function dndzone(node, options) {
         dropTargetClasses = [],
         transformDraggedElement = () => {},
         centreDraggedOnCursor = false,
-        scrollElement = null
+        scrollElement = null,
+        alwaysTransformElement = false
     }) {
         config.dropAnimationDurationMs = dropAnimationDurationMs;
         if (config.type && newType !== config.type) {
@@ -467,6 +469,7 @@ export function dndzone(node, options) {
         config.transformDraggedElement = transformDraggedElement;
         config.centreDraggedOnCursor = centreDraggedOnCursor;
         config.scrollElement = scrollElement;
+        config.alwaysTransformElement = alwaysTransformElement;
 
         // realtime update for dropTargetStyle
         if (
@@ -513,11 +516,13 @@ export function dndzone(node, options) {
 
         dzToConfig.set(node, config);
         const shadowElIdx = findShadowElementIdx(config.items);
+        let transformed = false;
         for (let idx = 0; idx < node.children.length; idx++) {
             const draggableEl = node.children[idx];
             styleDraggable(draggableEl, dragDisabled);
             if (idx === shadowElIdx) {
                 config.transformDraggedElement(draggedEl, draggedElData, idx);
+                transformed = true;
                 if (!morphDisabled) {
                     morphDraggedElementToBeLike(draggedEl, draggableEl, currentMousePosition.x, currentMousePosition.y);
                 }
@@ -537,6 +542,9 @@ export function dndzone(node, options) {
             if (!initialized) {
                 initialized = true;
             }
+        }
+        if (config.alwaysTransformElement && draggedEl != null && !transformed) {
+            config.transformDraggedElement(draggedEl, draggedElData, originIndex);
         }
     }
     configure(options);

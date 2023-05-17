@@ -34,6 +34,7 @@ export interface Options {
     centreDraggedOnCursor?: boolean;
     scrollElement?: HTMLElement; // Element to scroll when pointer is near edge of screen. Defaults to the dropzone itself.
     keyboardDisabled?: boolean; // Disable keyboard drag/drop
+    alwaysTransformElement?: boolean; // Transform element even if item cannot be dropped in dropzone
 }
 
 /**
